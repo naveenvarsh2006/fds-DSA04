@@ -1,0 +1,14 @@
+import numpy as np
+
+# Example quarterly sales data (sales amounts for Q1, Q2, Q3, Q4)
+sales_data = np.array([5000, 7000, 8000, 10000])  # Replace with actual values
+
+# Step 1: Calculate total sales for the year
+total_sales = np.sum(sales_data)
+
+# Step 2: Calculate percentage increase from Q1 to Q4
+percentage_increase = ((sales_data[3] - sales_data[0]) / sales_data[0]) * 100
+
+# Display results
+print(f"Total Sales for the Year: ${total_sales}")
+print(f"Percentage Increase in Sales from Q1 to Q4: {percentage_increase:.2f}%")

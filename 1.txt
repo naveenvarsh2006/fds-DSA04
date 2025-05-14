@@ -1,0 +1,23 @@
+import numpy as np
+
+# Sample 4x4 matrix (represents scores of 4 students in Math, Science, English, and History)
+student_scores = np.array([
+    [85, 78, 92, 88],  # Scores of Student 1
+    [76, 85, 90, 92],  # Scores of Student 2
+    [90, 88, 76, 85],  # Scores of Student 3
+    [89, 91, 87, 84]   # Scores of Student 4
+])
+
+# Step 1: Calculate the average score for each subject (column-wise average)
+average_scores = np.mean(student_scores, axis=0)
+
+# Step 2: Identify the subject with the highest average score
+subjects = ['Math', 'Science', 'English', 'History']
+highest_avg_subject = subjects[np.argmax(average_scores)]  # Find the index of the highest average score
+
+# Display results
+print("Average Scores for Each Subject:")
+for subject, avg in zip(subjects, average_scores):
+    print(f"{subject}: {avg:.2f}")
+
+print(f"\nSubject with the Highest Average Score: {highest_avg_subject}")

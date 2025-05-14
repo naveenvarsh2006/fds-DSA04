@@ -1,0 +1,31 @@
+# Sample property data
+property_data = [
+    {"property_id": 101, "location": "Mumbai", "number_of_bedrooms": 3, "area_in_sqft": 1200, "listing_price": 5500000},
+    {"property_id": 102, "location": "Delhi", "number_of_bedrooms": 5, "area_in_sqft": 4500, "listing_price": 4200000},
+    {"property_id": 103, "location": "Bangalore", "number_of_bedrooms": 2, "area_in_sqft": 800, "listing_price": 6100000},
+    {"property_id": 104, "location": "Mumbai", "number_of_bedrooms": 4, "area_in_sqft": 2500, "listing_price": 7500000},
+    {"property_id": 105, "location": "Delhi", "number_of_bedrooms": 6, "area_in_sqft": 5000, "listing_price": 8500000}
+]
+
+# 1. Average listing price of properties in each location
+location_prices = {}
+location_counts = {}
+
+for prop in property_data:
+    location = prop["location"]
+    location_prices[location] = location_prices.get(location, 0) + prop["listing_price"]
+    location_counts[location] = location_counts.get(location, 0) + 1
+
+print("Average Listing Price per Location:")
+for location in location_prices:
+    avg_price = location_prices[location] / location_counts[location]
+    print(f"{location}: ₹{avg_price:.2f}")
+
+# 2. Number of properties with more than four bedrooms
+num_large_properties = sum(1 for prop in property_data if prop["number_of_bedrooms"] > 4)
+print(f"\nNumber of properties with more than 4 bedrooms: {num_large_properties}")
+
+# 3. Property with the largest area
+largest_property = max(property_data, key=lambda prop: prop["area_in_sqft"])
+print("\nProperty with the Largest Area:")
+print(f"Property ID: {largest_property['property_id']}, Location: {largest_property['location']}, Area: {largest_property['area_in_sqft']} sqft, Listing Price: ₹{largest_property['listing_price']}")

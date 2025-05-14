@@ -1,0 +1,12 @@
+# Sample monthly sales data
+months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+sales = [15000, 18000, 17000, 19000, 22000, 25000, 24000, 26000, 23000, 21000, 20000, 19000]
+
+# Normalize sales values for visualization
+max_sales = max(sales)
+scale_factor = 50 / max_sales  # Scaling sales data for visualization
+
+print("Monthly Sales Trend (Text-Based Visualization)")
+for month, sale in zip(months, sales):
+    scaled_value = int(sale * scale_factor)
+    print(f"{month}: {'-' * scaled_value} ({sale})")

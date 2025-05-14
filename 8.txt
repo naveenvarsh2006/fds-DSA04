@@ -1,0 +1,35 @@
+from datetime import datetime
+
+# Sample sales data
+sales_data = [
+    {"product_name": "Laptop", "order_date": "2025-04-05", "quantity_sold": 5},
+    {"product_name": "Smartphone", "order_date": "2025-04-10", "quantity_sold": 10},
+    {"product_name": "Headphones", "order_date": "2025-04-15", "quantity_sold": 15},
+    {"product_name": "Laptop", "order_date": "2025-04-20", "quantity_sold": 8},
+    {"product_name": "Smartphone", "order_date": "2025-04-22", "quantity_sold": 12},
+    {"product_name": "Smartphone", "order_date": "2025-04-25", "quantity_sold": 7},
+    {"product_name": "Headphones", "order_date": "2025-04-28", "quantity_sold": 18},
+    {"product_name": "Laptop", "order_date": "2025-04-30", "quantity_sold": 10},
+]
+
+# Convert order_date to datetime and filter for the past month (April 2025)
+past_month_start = datetime.strptime("2025-04-01", "%Y-%m-%d")
+past_month_end = datetime.strptime("2025-04-30", "%Y-%m-%d")
+
+filtered_sales = [
+    sale for sale in sales_data if past_month_start <= datetime.strptime(sale["order_date"], "%Y-%m-%d") <= past_month_end
+]
+
+# Compute total quantity sold per product
+product_sales = {}
+for sale in filtered_sales:
+    product_name = sale["product_name"]
+    product_sales[product_name] = product_sales.get(product_name, 0) + sale["quantity_sold"]
+
+# Sort products by total sales in descending order and get top 5
+top_5_products = sorted(product_sales.items(), key=lambda x: x[1], reverse=True)[:5]
+
+# Print results
+print("Top 5 Best-Selling Products in the Past Month:")
+for product, quantity in top_5_products:
+    print(f"{product}: {quantity} units sold")

@@ -1,0 +1,30 @@
+import matplotlib.pyplot as plt
+
+# Sample sales data
+days = list(range(1, 31))  # Days in a month
+sales = [i * 10 + 5 for i in days]  # Sample sales trend
+
+# Create a figure with three subplots
+fig, axes = plt.subplots(3, 1, figsize=(8, 12))
+
+# Line Plot
+axes[0].plot(days, sales, marker='o', linestyle='-', color='b')
+axes[0].set_xlabel("Day of the Month")
+axes[0].set_ylabel("Sales")
+axes[0].set_title("Product Sales Over a Month")
+
+# Scatter Plot
+axes[1].scatter(days, sales, color='r')
+axes[1].set_xlabel("Day of the Month")
+axes[1].set_ylabel("Sales")
+axes[1].set_title("Scatter Plot of Product Sales Over a Month")
+
+# Bar Plot
+axes[2].bar(days, sales, color='g')
+axes[2].set_xlabel("Day of the Month")
+axes[2].set_ylabel("Sales")
+axes[2].set_title("Bar Plot of Monthly Sales Data")
+
+# Adjust layout and show plots
+plt.tight_layout()
+plt.show()

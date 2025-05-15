@@ -1,0 +1,47 @@
+import csv
+import string
+from collections import Counter
+import os
+
+# Stopwords to remove (basic list)
+stopwords = {"the", "and", "is", "to", "in", "this", "that", "for", "it", "of", "on", "with", "a"}
+
+# File name
+filename = "data.csv"
+
+# Check if the file exists, otherwise create it with sample data
+if not os.path.exists(filename):
+    with open(filename, "w", encoding="utf-8", newline="") as file:
+        writer = csv.writer(file)
+        writer.writerow(["feedback"])  # Header
+        writer.writerow(["Great product!"])
+        writer.writerow(["Not satisfied with delivery."])
+        writer.writerow(["Amazing quality."])
+        writer.writerow(["Excellent customer service."])
+        print(f"File '{filename}' was missing, so it has been created with sample data.")
+
+# Function to preprocess text
+def preprocess(text):
+    words = text.lower().translate(str.maketrans('', '', string.punctuation)).split()
+    return [word for word in words if word not in stopwords]
+
+# Load dataset from CSV
+feedback_data = []
+with open(filename, "r", encoding="utf-8") as file:
+    reader = csv.DictReader(file)
+    for row in reader:
+        feedback_data.extend(preprocess(row["feedback"]))
+
+# Calculate word frequency
+word_freq = Counter(feedback_data)
+
+# Get top N words from user input
+N = int(input("Enter the number of top frequent words to display: "))
+top_words = word_freq.most_common(N)
+
+# Print top N words and frequencies in a table format
+print("\nTop", N, "most frequent words:\n")
+print(f"{'Word':<15}{'Frequency':<10}")
+print("-" * 25)
+for word, count in top_words:
+    print(f"{word:<15}{count:<10}")

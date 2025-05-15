@@ -1,0 +1,46 @@
+import csv
+from collections import defaultdict
+import os
+
+# File name
+filename = "sales_data.csv"
+
+# Check if the file exists, otherwise create it with sample data
+if not os.path.exists(filename):
+    with open(filename, "w", encoding="utf-8", newline="") as file:
+        writer = csv.writer(file)
+        writer.writerow(["Date", "Product", "Quantity Sold", "Unit Price"])
+        writer.writerow(["2025-05-01", "Product A", 10, 50])
+        writer.writerow(["2025-05-02", "Product B", 5, 30])
+        writer.writerow(["2025-05-03", "Product A", 8, 50])
+        writer.writerow(["2025-05-04", "Product C", 12, 40])
+        writer.writerow(["2025-05-05", "Product B", 7, 30])
+        print(f"File '{filename}' was missing, so it has been created with sample data.")
+
+# Load sales data from CSV
+sales_data = []
+with open(filename, "r", encoding="utf-8") as file:
+    reader = csv.DictReader(file)
+    for row in reader:
+        row["Quantity Sold"] = int(row["Quantity Sold"])
+        row["Unit Price"] = float(row["Unit Price"])
+        row["Total Sales"] = row["Quantity Sold"] * row["Unit Price"]
+        sales_data.append(row)
+
+# Calculate total sales for each product
+product_sales = defaultdict(float)
+for row in sales_data:
+    product_sales[row["Product"]] += row["Total Sales"]
+
+# Calculate profit (assuming 20% profit margin)
+profit = {product: sales * 0.2 for product, sales in product_sales.items()}
+
+# Get top 5 most profitable products
+top_profitable_products = sorted(profit.items(), key=lambda x: x[1], reverse=True)[:5]
+
+# Print results
+print("\nTop 5 Most Profitable Products:\n")
+print(f"{'Product':<15}{'Profit ($)':<10}")
+print("-" * 25)
+for product, profit_value in top_profitable_products:
+    print(f"{product:<15}{profit_value:.2f}")

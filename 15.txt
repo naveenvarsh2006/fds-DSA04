@@ -1,0 +1,11 @@
+from collections import Counter
+
+# Sample dataset
+likes = [150, 200, 150, 300, 200, 400, 300]
+
+# Calculate frequency distribution
+like_distribution = Counter(likes)
+
+# Print results
+for like_count, frequency in like_distribution.items():
+    print(f"Likes {like_count}: {frequency} posts")

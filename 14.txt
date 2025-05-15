@@ -1,0 +1,11 @@
+from collections import Counter
+
+# Sample customer age data
+customer_ages = [22, 25, 22, 30, 40, 30, 25, 22, 30, 40, 22]
+
+# Calculate frequency distribution
+age_distribution = Counter(customer_ages)
+
+# Print results
+for age, count in age_distribution.items():
+    print(f"Age {age}: {count} customers")

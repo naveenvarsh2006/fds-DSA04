@@ -1,0 +1,57 @@
+import csv
+from collections import defaultdict
+
+# File name
+filename = "customer_data.csv"
+
+# Check if the file exists, otherwise create it with sample data
+try:
+    with open(filename, "r", encoding="utf-8") as file:
+        pass  # File exists, continue as normal
+except FileNotFoundError:
+    with open(filename, "w", encoding="utf-8", newline="") as file:
+        writer = csv.writer(file)
+        writer.writerow(["Customer ID", "Age", "Gender", "Total Spending"])
+        writer.writerow(["1", "25", "Male", "1200"])
+        writer.writerow(["2", "40", "Female", "800"])
+        writer.writerow(["3", "30", "Male", "300"])
+        writer.writerow(["4", "22", "Female", "1500"])
+        writer.writerow(["5", "35", "Male", "600"])
+        print(f"File '{filename}' was missing, so it has been created with sample data.")
+
+# Function to categorize spending levels
+def segment_spending(spending):
+    spending = float(spending)
+    if spending >= 1000:
+        return "High Spender"
+    elif spending >= 500:
+        return "Medium Spender"
+    else:
+        return "Low Spender"
+
+# Load and process data
+customer_data = []
+segments = defaultdict(list)
+
+with open(filename, "r", encoding="utf-8") as file:
+    reader = csv.DictReader(file)
+    for row in reader:
+        row["Age"] = int(row["Age"])
+        row["Total Spending"] = float(row["Total Spending"])
+        row["Spending Segment"] = segment_spending(row["Total Spending"])
+        customer_data.append(row)
+        segments[row["Spending Segment"]].append(row["Age"])
+
+# Calculate average age for each spending segment
+avg_age_segment = {segment: sum(ages) / len(ages) for segment, ages in segments.items()}
+
+# Print results
+print("\nCustomer Segmentation:\n")
+print(f"{'Customer ID':<12}{'Age':<8}{'Gender':<10}{'Total Spending':<15}{'Spending Segment':<15}")
+print("-" * 60)
+for customer in customer_data:
+    print(f"{customer['Customer ID']:<12}{customer['Age']:<8}{customer['Gender']:<10}{customer['Total Spending']:<15}{customer['Spending Segment']:<15}")
+
+print("\nAverage Age in Each Segment:\n")
+for segment, avg_age in avg_age_segment.items():
+    print(f"{segment}: {avg_age:.2f} years")

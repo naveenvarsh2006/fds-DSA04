@@ -1,0 +1,27 @@
+from collections import Counter
+import string
+
+# Sample customer reviews dataset
+reviews = [
+    "This product is amazing! Highly recommend it.",
+    "Not satisfied with the product. It broke after a week.",
+    "Great quality, but delivery was delayed.",
+    "Excellent value for money.",
+    "I love this product! Will buy again.",
+]
+
+# Preprocess reviews: lowercase, remove punctuation, split into words
+def preprocess(text):
+    return text.lower().translate(str.maketrans('', '', string.punctuation)).split()
+
+# Combine all reviews into a single list of words
+words = []
+for review in reviews:
+    words.extend(preprocess(review))
+
+# Calculate frequency distribution
+word_freq = Counter(words)
+
+# Print results
+for word, count in word_freq.items():
+    print(f"{word}: {count}")

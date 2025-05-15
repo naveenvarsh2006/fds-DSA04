@@ -1,0 +1,46 @@
+import numpy as np
+import matplotlib.pyplot as plt
+import scipy.stats as stats
+
+# Define the data
+age = [23, 23, 27, 27, 39, 41, 47, 49, 50, 52, 54, 54, 56, 57, 58, 58, 60, 61]
+fat = [9.5, 26.5, 7.8, 17.8, 31.4, 25.9, 27.4, 27.2, 31.2, 34.6, 42.5, 28.8, 33.4, 30.2, 34.1, 32.9, 41.2, 35.7]
+
+# Calculate Mean, Median, and Standard Deviation
+mean_age = sum(age) / len(age)
+median_age = sorted(age)[len(age)//2]
+std_age = np.std(age, ddof=1)
+
+mean_fat = sum(fat) / len(fat)
+median_fat = sorted(fat)[len(fat)//2]
+std_fat = np.std(fat, ddof=1)
+
+print(f"Mean Age: {mean_age}, Median Age: {median_age}, Std Dev Age: {std_age}")
+print(f"Mean %Fat: {mean_fat}, Median %Fat: {median_fat}, Std Dev %Fat: {std_fat}")
+
+# Create Boxplots
+plt.figure(figsize=(10, 5))
+plt.subplot(1, 2, 1)
+plt.boxplot(age)
+plt.title("Boxplot of Age")
+
+plt.subplot(1, 2, 2)
+plt.boxplot(fat)
+plt.title("Boxplot of Body Fat Percentage")
+
+plt.tight_layout()
+plt.show()
+
+# Create Scatter Plot
+plt.figure(figsize=(6, 4))
+plt.scatter(age, fat)
+plt.xlabel("Age")
+plt.ylabel("Body Fat Percentage")
+plt.title("Scatter Plot of Age vs Body Fat Percentage")
+plt.show()
+
+# Create Q-Q Plot
+plt.figure(figsize=(6, 4))
+stats.probplot(fat, dist="norm", plot=plt)
+plt.title("Q-Q Plot for Body Fat Percentage")
+plt.show()
